@@ -1,0 +1,199 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   THEME TOKENS
+   Two genuinely different looks, not just a colour inversion:
+   · dark  — the original moody, glass-bordered, glow-accented look
+   · light — a warm paper editorial look: soft shadows instead of
+             glow, a deeper ink-on-paper gradient, no glass borders
+   Toggle sets data-theme="light" | "dark" on <html> (see ThemeContext).
+   Everything below is consumed via Tailwind arbitrary values, e.g.
+   text-[var(--ink-70)], bg-[var(--surface-1)] — never hardcode hex
+   again in components; add a token here instead.
+   ───────────────────────────────────────────────────────────── */
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #0c0c0c;
+  --surface-1: #141418; /* cards, form fields */
+  --surface-2: #1a1a20; /* hover / nested surface */
+  --surface-3: #111114; /* modals */
+  --surface-4: #0a0a0c; /* deepest — prototype shells */
+  --surface-focus: #18121a;
+
+  /* "ink" = the foreground colour (#D7E2EA) at N% opacity over --bg */
+  --ink-100: #d7e2ea;
+  --ink-90: rgba(215, 226, 234, 0.9);
+  --ink-85: rgba(215, 226, 234, 0.85);
+  --ink-80: rgba(215, 226, 234, 0.8);
+  --ink-75: rgba(215, 226, 234, 0.75);
+  --ink-70: rgba(215, 226, 234, 0.7);
+  --ink-65: rgba(215, 226, 234, 0.65);
+  --ink-60: rgba(215, 226, 234, 0.6);
+  --ink-55: rgba(215, 226, 234, 0.55);
+  --ink-50: rgba(215, 226, 234, 0.5);
+  --ink-45: rgba(215, 226, 234, 0.45);
+  --ink-40: rgba(215, 226, 234, 0.4);
+  --ink-35: rgba(215, 226, 234, 0.35);
+  --ink-30: rgba(215, 226, 234, 0.3);
+  --ink-25: rgba(215, 226, 234, 0.25);
+  --ink-20: rgba(215, 226, 234, 0.2);
+  --ink-15: rgba(215, 226, 234, 0.15);
+  --ink-12: rgba(215, 226, 234, 0.12);
+  --ink-10: rgba(215, 226, 234, 0.1);
+  --ink-05: rgba(215, 226, 234, 0.05);
+  --ink-04: rgba(215, 226, 234, 0.04);
+  --ink-03: rgba(215, 226, 234, 0.03);
+  --ink-02: rgba(215, 226, 234, 0.02);
+
+  /* the "band" = Services section — always the inverse surface, for rhythm */
+  --band-bg: #ffffff;
+  --band-ink-100: #0c0c0c;
+  --band-ink-60: rgba(12, 12, 12, 0.6);
+  --band-ink-50: rgba(12, 12, 12, 0.5);
+  --band-ink-40: rgba(12, 12, 12, 0.4);
+  --band-ink-15: rgba(12, 12, 12, 0.15);
+  --band-ink-10: rgba(12, 12, 12, 0.1);
+  --band-ink-03: rgba(12, 12, 12, 0.03);
+  --band-outline: #0c0c0c;
+
+  --accent-1: #18011f;
+  --accent-2: #b600a8;
+  --accent-3: #7621b0;
+  --accent-4: #be4c00;
+  --accent-gradient: linear-gradient(123deg, var(--accent-1) 7%, var(--accent-2) 37%, var(--accent-3) 72%, var(--accent-4) 100%);
+  --accent-shadow: 0px 4px 4px rgba(181, 1, 167, 0.25), 4px 4px 12px #7721b1 inset;
+  --accent-outline: #ffffff;
+  --accent-glow: rgba(181, 1, 167, 0.45);
+
+  --heading-gradient: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
+  --card-elevation: none;
+  --scrollbar-track: #0c0c0c;
+  --scrollbar-thumb: #1f1f24;
+  --scrollbar-thumb-hover: #2a2a30;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --bg: #f6f4ef;
+  --surface-1: #ffffff;
+  --surface-2: #eeebe2;
+  --surface-3: #ffffff;
+  --surface-4: #fbf9f4;
+  --surface-focus: #ffffff;
+
+  /* "ink" = a warm near-black foreground at N% opacity over --bg */
+  --ink-100: #16151a;
+  --ink-90: rgba(22, 21, 26, 0.9);
+  --ink-85: rgba(22, 21, 26, 0.85);
+  --ink-80: rgba(22, 21, 26, 0.8);
+  --ink-75: rgba(22, 21, 26, 0.75);
+  --ink-70: rgba(22, 21, 26, 0.7);
+  --ink-65: rgba(22, 21, 26, 0.65);
+  --ink-60: rgba(22, 21, 26, 0.6);
+  --ink-55: rgba(22, 21, 26, 0.55);
+  --ink-50: rgba(22, 21, 26, 0.5);
+  --ink-45: rgba(22, 21, 26, 0.45);
+  --ink-40: rgba(22, 21, 26, 0.4);
+  --ink-35: rgba(22, 21, 26, 0.35);
+  --ink-30: rgba(22, 21, 26, 0.3);
+  --ink-25: rgba(22, 21, 26, 0.25);
+  --ink-20: rgba(22, 21, 26, 0.2);
+  --ink-15: rgba(22, 21, 26, 0.15);
+  --ink-12: rgba(22, 21, 26, 0.12);
+  --ink-10: rgba(22, 21, 26, 0.1);
+  --ink-05: rgba(22, 21, 26, 0.05);
+  --ink-04: rgba(22, 21, 26, 0.04);
+  --ink-03: rgba(22, 21, 26, 0.03);
+  --ink-02: rgba(22, 21, 26, 0.02);
+
+  /* the "band" inverts to a dark section for rhythm, opposite of dark-mode's white band */
+  --band-bg: #14131a;
+  --band-ink-100: #f5f2ea;
+  --band-ink-60: rgba(245, 242, 234, 0.6);
+  --band-ink-50: rgba(245, 242, 234, 0.5);
+  --band-ink-40: rgba(245, 242, 234, 0.4);
+  --band-ink-15: rgba(245, 242, 234, 0.15);
+  --band-ink-10: rgba(245, 242, 234, 0.1);
+  --band-ink-03: rgba(245, 242, 234, 0.03);
+  --band-outline: #f5f2ea;
+
+  /* deeper, print-like gradient tuned to stay legible on paper */
+  --accent-1: #2a0a52;
+  --accent-2: #a3157e;
+  --accent-3: #5b21b6;
+  --accent-4: #c2660a;
+  --accent-gradient: linear-gradient(123deg, var(--accent-1) 7%, var(--accent-2) 37%, var(--accent-3) 72%, var(--accent-4) 100%);
+  --accent-shadow: 0 8px 20px rgba(91, 33, 182, 0.18), 0 2px 6px rgba(22, 21, 26, 0.08);
+  --accent-outline: #f6f4ef;
+  --accent-glow: rgba(163, 21, 126, 0.25);
+
+  --heading-gradient: linear-gradient(180deg, #16151a 0%, #57545f 100%);
+  --card-elevation: 0 1px 2px rgba(22, 21, 26, 0.04), 0 12px 28px rgba(22, 21, 26, 0.07);
+  --scrollbar-track: #f6f4ef;
+  --scrollbar-thumb: #ddd8cc;
+  --scrollbar-thumb-hover: #cabf82;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']):not([data-theme='light']) {
+    color-scheme: light;
+  }
+}
+
+html,
+body,
+#root {
+  background: var(--bg);
+  font-family: 'Kanit', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--ink-100);
+  overflow-x: hidden;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+.hero-heading {
+  background: var(--heading-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Subtle scrollbar that matches the current theme */
+::-webkit-scrollbar {
+  width: 10px;
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+}

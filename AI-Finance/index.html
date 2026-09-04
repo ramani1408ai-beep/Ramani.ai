@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FMS — Financial Management System (Prototype)</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><rect width=%2224%22 height=%2224%22 rx=%226%22 fill=%22%23378ADD%22/><path d=%22M6 12h5M6 8h9M6 16h7%22 stroke=%22white%22 stroke-width=%222%22 stroke-linecap=%22round%22/></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<div class="demo-banner">
+  <span>🧪 <b>Prototype build</b> — sample workflow only, all data on this screen is fictional demo data</span>
+</div>
+
+<!-- ============================== LOGIN SCREEN ============================== -->
+<div id="login-screen" class="login-screen">
+  <div class="login-left">
+    <div class="login-brand">
+      <div class="badge" id="login-badge"></div>
+      <span>FMS &nbsp;·&nbsp; DEMO</span>
+    </div>
+
+    <div class="login-headline">
+      <span class="ai-tag">AI-Powered Bookkeeping</span>
+      <h1>Clarity in<br/><b>every number.</b></h1>
+      <p>Financial reconciliation, multi-bank monitoring, and real-time portfolio intelligence — reads your documents, matches your bank feed, and drafts your books automatically.</p>
+    </div>
+
+    <div class="login-stats">
+      <div>
+        <div class="stat-value" style="color:#1AB573">22.62M</div>
+        <div class="stat-label">Net Worth · AED</div>
+      </div>
+      <div>
+        <div class="stat-value">14</div>
+        <div class="stat-label">Banks Linked</div>
+      </div>
+      <div>
+        <div class="stat-value">11</div>
+        <div class="stat-label">Properties</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="login-right">
+    <div class="login-card">
+      <div class="login-card-head">
+        <div class="login-card-icon" id="login-card-icon"></div>
+        <h2>FMS</h2>
+        <p>Financial Management System</p>
+      </div>
+
+      <form id="login-form">
+        <div class="field">
+          <label>Email address</label>
+          <div class="field-wrap">
+            <span id="icon-mail"></span>
+            <input type="email" id="login-email" value="demo@fms-portfolio.com" autocomplete="email" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <div class="field-wrap">
+            <span id="icon-lock"></span>
+            <input type="password" id="login-password" value="demopass123" autocomplete="current-password" required />
+            <button type="button" class="toggle-eye" id="toggle-password"></button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" id="login-submit">
+          <span>Sign in to demo</span>
+          <span id="icon-arrow"></span>
+        </button>
+      </form>
+
+      <div class="login-hint">
+        <b>This is a click-through prototype.</b> Any email / password signs you in — no real account or backend is involved.
+      </div>
+
+      <div class="login-footnote">Built to walk stakeholders through the FMS product workflow</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== APP SHELL ============================== -->
+<div id="app-shell" class="app-shell hidden">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="main-col">
+    <div class="tab-bar" id="tab-bar"></div>
+    <div class="page-scroll">
+      <div class="page" id="page-content"></div>
+    </div>
+  </div>
+</div>
+
+<div id="toast-root"></div>
+<div id="copilot-root"></div>
+<div id="command-palette-root"></div>
+<div id="presenter-root"></div>
+
+<script src="js/icons.js"></script>
+<script src="js/util.js"></script>
+<script src="js/data.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/pages/dashboard.js"></script>
+<script src="js/pages/capture.js"></script>
+<script src="js/pages/transactions.js"></script>
+<script src="js/pages/reconciliation.js"></script>
+<script src="js/pages/reports.js"></script>
+<script src="js/pages/forecast.js"></script>
+<script src="js/pages/commodities.js"></script>
+<script src="js/pages/misc.js"></script>
+<script src="js/copilot.js"></script>
+<script src="js/command-palette.js"></script>
+<script src="js/presenter.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
