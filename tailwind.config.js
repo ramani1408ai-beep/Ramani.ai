@@ -5,7 +5,7 @@ export default {
     extend: {
       fontFamily: {
         kanit: ['Kanit', 'sans-serif'],
-        display: ['Syne', 'sans-serif'],
+        display: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
         sans: ['Manrope', 'system-ui', 'sans-serif'],
         serif: ['"Instrument Serif"', 'Georgia', 'serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],

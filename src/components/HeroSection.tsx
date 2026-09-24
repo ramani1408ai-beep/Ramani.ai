@@ -136,7 +136,7 @@ const HeroSection = ({ onOpenResume }: { onOpenResume: () => void }) => {
 
           <h1
             className="font-display font-extrabold leading-[0.9] tracking-[-0.03em] text-[var(--ink-100)]"
-            style={{ fontSize: 'clamp(3.3rem, 11vw, 8.2rem)' }}
+            style={{ fontSize: 'clamp(3.9rem, 11vw, 8.6rem)' }}
           >
             <span className="sr-only">Ramani Dulipala</span>
             <Letters word="Ramani" delay={0.1} />
