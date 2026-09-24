@@ -1,6 +1,9 @@
 import { useState } from 'react';
-import { Mail, Linkedin, Instagram, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Mail, Linkedin, Instagram, Send, CheckCircle, AlertCircle, ArrowUpRight, ArrowUp } from 'lucide-react';
 import FadeIn from './FadeIn';
+import SectionHeader from './SectionHeader';
+import { NAV_LINKS } from './Nav';
+import { useDubaiTime } from '../lib/useDubaiTime';
 import { sendEnquiry, isEmailConfigured, CONTACT_EMAIL, LINKEDIN_URL, INSTAGRAM_URL } from '../lib/email';
 
 const PROJECT_TYPES = [
@@ -38,6 +41,7 @@ const QUICK_LINKS = [
 const ContactSection = () => {
   const [form, setForm] = useState({ name: '', email: '', projectType: '', budget: '', message: '' });
   const [status, setStatus] = useState<Status>('idle');
+  const time = useDubaiTime();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -69,39 +73,38 @@ const ContactSection = () => {
     'w-full rounded-2xl border border-[var(--ink-15)] bg-[var(--surface-1)] px-5 py-3.5 text-sm text-[var(--ink-100)] placeholder-[var(--ink-30)] outline-none transition focus:border-[var(--accent-2)]/60 focus:bg-[var(--surface-focus)] hover:border-[var(--ink-25)]';
 
   return (
-    <section
-      id="contact"
-      className="relative w-full bg-[var(--bg)] px-5 sm:px-8 md:px-10 pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20"
-    >
-      {/* Heading */}
-      <FadeIn y={40}>
-        <h2
-          className="hero-heading text-center font-black uppercase tracking-tight leading-none mb-4"
-          style={{ fontSize: 'clamp(3rem, 12vw, 160px)' }}
-        >
-          Get in touch
-        </h2>
-      </FadeIn>
+    <section id="contact" className="relative w-full overflow-hidden px-5 sm:px-8 pt-24 sm:pt-28 md:pt-36 pb-10">
+      <div className="aurora pointer-events-none -right-24 top-24 h-80 w-80" style={{ background: 'var(--accent-2)', opacity: 0.18 }} />
+      <div className="relative mx-auto max-w-6xl">
+      <SectionHeader
+        index="06"
+        label="Contact"
+        title={
+          <>
+            Let&apos;s build something
+            <br />
+            <em className="text-gradient">intelligent.</em>
+          </>
+        }
+        intro="Tell me what you're trying to automate, predict or understand — I'll reply within 24 hours."
+      />
 
-      <FadeIn delay={0.15} y={20}>
-        <p
-          className="text-center font-light uppercase tracking-widest text-[var(--ink-60)] mb-16 sm:mb-20"
-          style={{ fontSize: 'clamp(0.85rem, 1.4vw, 1.1rem)' }}
-        >
-          Let's build something intelligent together
-        </p>
-      </FadeIn>
-
-      <div className="mx-auto max-w-5xl grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 md:gap-10">
 
         {/* LEFT — quick info */}
         <div className="lg:col-span-2 flex flex-col gap-6 justify-start pt-2">
           <FadeIn delay={0.1} y={30}>
             <div className="rounded-[28px] border border-[var(--ink-10)] bg-[var(--surface-1)] p-7 flex flex-col gap-5">
-              <p className="text-xs font-medium uppercase tracking-widest text-[var(--ink-40)]">Based in</p>
-              <p className="text-lg font-medium text-[var(--ink-100)]">Dubai, UAE 🇦🇪</p>
+              <span className="inline-flex w-fit items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-[var(--success)]">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" /> Taking new projects
+              </span>
+              <div>
+                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--ink-40)]">Based in</p>
+                <p className="mt-1 font-display text-2xl font-bold text-[var(--ink-100)]">Dubai, UAE</p>
+                <p className="font-mono text-xs text-[var(--ink-45)]">{time} GST · usually replies within 24h</p>
+              </div>
               <div className="border-t border-[var(--ink-10)] pt-5 flex flex-col gap-3">
-                <p className="text-xs font-medium uppercase tracking-widest text-[var(--ink-40)]">Open to</p>
+                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--ink-40)]">Open to</p>
                 {['Freelance Projects', 'AI Consulting', 'Remote Contracts', 'GCC & Global'].map((item) => (
                   <div key={item} className="flex items-center gap-2.5">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shrink-0" />
@@ -126,10 +129,11 @@ const ContactSection = () => {
                     <div className="rounded-full border border-[var(--ink-20)] p-2.5 group-hover:border-[var(--ink-50)] transition">
                       <Icon size={16} className="text-[var(--ink-100)]" strokeWidth={1.5} />
                     </div>
-                    <div className="flex flex-col gap-0.5 min-w-0">
-                      <span className="text-[10px] uppercase tracking-widest text-[var(--ink-40)]">{link.label}</span>
-                      <span className="text-sm text-[var(--ink-80)] truncate">{link.value}</span>
+                    <div className="flex flex-col gap-0.5 min-w-0 flex-1">
+                      <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--ink-40)]">{link.label}</span>
+                      <span className="text-sm font-semibold text-[var(--ink-90)] truncate">{link.value}</span>
                     </div>
+                    <ArrowUpRight size={16} className="shrink-0 text-[var(--ink-40)] transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--ink-100)]" />
                   </a>
                 </FadeIn>
               );
@@ -141,11 +145,11 @@ const ContactSection = () => {
         <FadeIn delay={0.2} y={30} className="lg:col-span-3">
           <form
             onSubmit={handleSubmit}
-            className="rounded-[32px] border border-[var(--ink-15)] bg-[var(--surface-1)] p-6 sm:p-8 flex flex-col gap-5"
+            className="rounded-[28px] border border-[var(--ink-12)] bg-[var(--surface-1)] p-6 sm:p-8 flex flex-col gap-5 shadow-[var(--card-elevation)]"
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex flex-col gap-2">
-                <label className="text-[10px] uppercase tracking-widest text-[var(--ink-40)]">Name *</label>
+                <label className="font-mono text-[10px] uppercase tracking-widest text-[var(--ink-45)]">Name *</label>
                 <input
                   name="name"
                   value={form.name}
@@ -156,7 +160,7 @@ const ContactSection = () => {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <label className="text-[10px] uppercase tracking-widest text-[var(--ink-40)]">Email *</label>
+                <label className="font-mono text-[10px] uppercase tracking-widest text-[var(--ink-45)]">Email *</label>
                 <input
                   name="email"
                   type="email"
@@ -171,7 +175,7 @@ const ContactSection = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex flex-col gap-2">
-                <label className="text-[10px] uppercase tracking-widest text-[var(--ink-40)]">Project Type</label>
+                <label className="font-mono text-[10px] uppercase tracking-widest text-[var(--ink-45)]">Project Type</label>
                 <select
                   name="projectType"
                   value={form.projectType}
@@ -186,7 +190,7 @@ const ContactSection = () => {
                 </select>
               </div>
               <div className="flex flex-col gap-2">
-                <label className="text-[10px] uppercase tracking-widest text-[var(--ink-40)]">Budget (USD)</label>
+                <label className="font-mono text-[10px] uppercase tracking-widest text-[var(--ink-45)]">Budget (USD)</label>
                 <select
                   name="budget"
                   value={form.budget}
@@ -203,7 +207,7 @@ const ContactSection = () => {
             </div>
 
             <div className="flex flex-col gap-2">
-              <label className="text-[10px] uppercase tracking-widest text-[var(--ink-40)]">Message *</label>
+              <label className="font-mono text-[10px] uppercase tracking-widest text-[var(--ink-45)]">Message *</label>
               <textarea
                 name="message"
                 value={form.message}
@@ -220,12 +224,7 @@ const ContactSection = () => {
               type="submit"
               disabled={status === 'sending' || status === 'success'}
               className="mt-1 inline-flex items-center justify-center gap-2.5 rounded-full px-8 py-3.5 text-sm font-medium uppercase tracking-widest text-white transition hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 disabled:pointer-events-none"
-              style={{
-                background: 'linear-gradient(123deg,var(--accent-1) 7%,var(--accent-2) 37%,var(--accent-3) 72%,var(--accent-4) 100%)',
-                boxShadow: '0px 4px 4px var(--accent-glow),4px 4px 12px var(--accent-3) inset',
-                outline: '2px solid var(--accent-outline)',
-                outlineOffset: '-3px',
-              }}
+              style={{ background: 'var(--accent-gradient)', boxShadow: 'var(--accent-shadow)' }}
             >
               {status === 'sending' ? (
                 <>
@@ -272,17 +271,37 @@ const ContactSection = () => {
         </FadeIn>
       </div>
 
+      </div>
+
       {/* Footer */}
-      <FadeIn delay={0.4} y={20}>
-        <div className="mx-auto mt-20 sm:mt-24 md:mt-28 flex max-w-5xl flex-col items-center gap-3 border-t border-[var(--ink-10)] pt-8 text-center sm:flex-row sm:justify-between">
-          <span className="font-light uppercase tracking-widest text-[var(--ink-50)]" style={{ fontSize: 'clamp(0.7rem,1.1vw,0.9rem)' }}>
-            © 2026 Ramani Dulipala
-          </span>
-          <span className="font-light uppercase tracking-widest text-[var(--ink-50)]" style={{ fontSize: 'clamp(0.7rem,1.1vw,0.9rem)' }}>
-            AI Engineer · Dubai, UAE
-          </span>
+      <footer className="relative mx-auto mt-24 sm:mt-32 max-w-6xl border-t border-[var(--ink-10)] pt-8">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-[var(--ink-55)]">
+            {NAV_LINKS.map((l) => (
+              <a key={l.id} href={`#${l.id}`} className="transition hover:text-[var(--ink-100)]">
+                {l.label}
+              </a>
+            ))}
+          </nav>
+          <a
+            href="#top"
+            className="inline-flex w-fit items-center gap-2 rounded-full border border-[var(--ink-15)] px-4 py-2 text-sm font-semibold text-[var(--ink-80)] transition hover:bg-[var(--ink-05)]"
+          >
+            Back to top <ArrowUp size={14} />
+          </a>
         </div>
-      </FadeIn>
+        <p
+          className="text-fade mt-10 select-none whitespace-nowrap text-center font-display font-extrabold leading-none tracking-tighter"
+          style={{ fontSize: 'clamp(3rem, 13.5vw, 12rem)' }}
+          aria-hidden
+        >
+          RAMANI.AI
+        </p>
+        <div className="mt-6 flex flex-col items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--ink-40)] sm:flex-row sm:justify-between">
+          <span>© 2026 Ramani Dulipala</span>
+          <span>AI Engineer · Dubai, UAE · {time} GST</span>
+        </div>
+      </footer>
     </section>
   );
 };

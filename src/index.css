@@ -158,7 +158,7 @@ html,
 body,
 #root {
   background: var(--bg);
-  font-family: 'Kanit', sans-serif;
+  font-family: 'Manrope', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -196,4 +196,128 @@ body {
 img {
   -webkit-user-drag: none;
   user-select: none;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+::selection {
+  background: var(--accent-2);
+  color: #fff;
+}
+
+/* ─── Redesign utilities ─────────────────────────────────────── */
+
+.text-gradient {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink-25);
+}
+
+/* faint engineering grid, fades out toward the edges */
+.bg-grid {
+  background-image:
+    linear-gradient(var(--ink-05) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ink-05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 40%, transparent 100%);
+}
+
+/* soft aurora blobs behind the hero */
+.aurora {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.35;
+  animation: auroraFloat 18s ease-in-out infinite alternate;
+}
+@keyframes auroraFloat {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(40px, -30px, 0) scale(1.15); }
+}
+
+/* infinite ticker */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
+}
+.marquee-track.reverse { animation-direction: reverse; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* cursor-following spotlight on cards (set --mx / --my from JS) */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), var(--accent-glow), transparent 45%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: -1;
+  pointer-events: none;
+}
+.spotlight:hover::before { opacity: 0.5; }
+
+/* hide scrollbars on horizontal strips but keep them scrollable */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.animate-bob { animation: bob 5s ease-in-out infinite; }
+
+@keyframes blink { 50% { opacity: 0; } }
+.caret::after {
+  content: '';
+  display: inline-block;
+  width: 0.08em;
+  height: 0.9em;
+  margin-left: 0.08em;
+  vertical-align: -0.08em;
+  background: currentColor;
+  animation: blink 1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .marquee-track, .aurora, .animate-bob, .caret::after { animation: none !important; }
+}
+
+/* translucent surface for floating UI (Tailwind can't alpha-blend CSS vars) */
+.glass {
+  background: color-mix(in srgb, var(--surface-1) 78%, transparent);
+}
+
+/* status green, readable on both themes */
+:root, :root[data-theme='dark'] { --success: #6ee7b7; }
+:root[data-theme='light'] { --success: #047857; }
+
+/* big footer wordmark: solid ink that fades out toward the baseline */
+.text-fade {
+  background: linear-gradient(180deg, var(--ink-25) 0%, var(--ink-03) 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }

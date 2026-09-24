@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 import type { ComponentType } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import FadeIn from './FadeIn';
+import SectionHeader from './SectionHeader';
 import ProjectDetailModal from './ProjectDetailModal';
 import FinanceGPTDemo from './prototypes/FinanceGPTDemo';
 import ReconciliationDemo from './prototypes/ReconciliationDemo';
@@ -90,79 +91,173 @@ export const PROJECTS: ProjectData[] = [
   },
 ];
 
-const ProjectCard = ({ project, index, onOpen }: { project: ProjectData; index: number; onOpen: () => void }) => (
-  <FadeIn delay={index * 0.08} y={30}>
+type Filter = 'all' | 'alpago' | 'independent';
+const FILTERS: { id: Filter; label: string }[] = [
+  { id: 'all', label: 'All' },
+  { id: 'alpago', label: 'At Alpago' },
+  { id: 'independent', label: 'Independent' },
+];
+const matches = (p: ProjectData, f: Filter) =>
+  f === 'all' ? true : f === 'alpago' ? p.category.startsWith('Alpago') : !p.category.startsWith('Alpago');
+
+// forwardRef: AnimatePresence's popLayout mode measures each card through a ref.
+const ProjectCard = forwardRef<HTMLElement, { project: ProjectData; featured: boolean; span: string; onOpen: () => void }>(({ project, featured, span, onOpen }, ref) => {
+  // feed the cursor position to the .spotlight gradient
+  const onMove = (e: React.MouseEvent<HTMLElement>) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`);
+    e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`);
+  };
+
+  return (
     <motion.article
+      ref={ref}
+      layout
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.96 }}
+      transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
       onClick={onOpen}
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.25 }}
-      className="group flex h-full cursor-pointer flex-col gap-4 rounded-[28px] border border-[var(--ink-12)] bg-[var(--surface-1)] p-6 sm:p-7 shadow-[var(--card-elevation)] transition-colors hover:border-[var(--accent-2)]/45"
+      onMouseMove={onMove}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onOpen();
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={`Open ${project.name} prototype`}
+      className={`spotlight group flex cursor-pointer flex-col gap-4 overflow-hidden rounded-[28px] border border-[var(--ink-12)] bg-[var(--surface-1)] p-6 sm:p-7 shadow-[var(--card-elevation)] outline-none transition-colors hover:border-[var(--ink-30)] focus-visible:border-[var(--accent-2)] ${span} ${featured ? 'lg:p-9' : ''}`}
     >
       <div className="flex items-start justify-between gap-3">
-        <span className="font-black leading-none text-[var(--ink-15)]" style={{ fontSize: 'clamp(2.2rem, 4vw, 3rem)' }}>
+        <span
+          className="font-display font-extrabold leading-none text-transparent"
+          style={{ fontSize: featured ? 'clamp(3rem, 6vw, 5.5rem)' : 'clamp(2.2rem, 4vw, 3rem)', WebkitTextStroke: '1.5px var(--ink-25)' }}
+        >
           {project.number}
         </span>
-        <span className="mt-1 shrink-0 rounded-full border border-[var(--ink-15)] px-2.5 py-1 text-[9px] font-medium uppercase tracking-widest text-[var(--ink-45)]">
+        <span className="mt-1 shrink-0 rounded-full border border-[var(--ink-15)] px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-[var(--ink-50)]">
           {project.category}
         </span>
       </div>
 
-      <h3 className="text-base sm:text-lg font-medium uppercase leading-snug text-[var(--ink-100)]">{project.name}</h3>
+      <h3
+        className={`font-display font-bold leading-tight tracking-tight text-[var(--ink-100)] ${
+          featured ? 'text-2xl sm:text-4xl' : 'text-lg sm:text-xl'
+        }`}
+      >
+        {project.name}
+      </h3>
 
-      <p className="line-clamp-3 flex-1 text-sm leading-relaxed text-[var(--ink-55)]">{project.description}</p>
+      <p className={`flex-1 leading-relaxed text-[var(--ink-55)] ${featured ? 'text-base sm:text-lg line-clamp-6' : 'text-sm line-clamp-3'}`}>
+        {project.description}
+      </p>
 
       <div className="flex flex-wrap gap-1.5">
-        {project.stack.slice(0, 3).map((tag) => (
-          <span key={tag} className="rounded-full border border-[var(--ink-12)] px-2.5 py-1 text-[10px] uppercase tracking-wider text-[var(--ink-45)]">
+        {project.stack.slice(0, featured ? 6 : 3).map((tag) => (
+          <span key={tag} className="rounded-full border border-[var(--ink-12)] px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-[var(--ink-45)]">
             {tag}
           </span>
         ))}
-        {project.stack.length > 3 && (
-          <span className="rounded-full border border-[var(--ink-12)] px-2.5 py-1 text-[10px] uppercase tracking-wider text-[var(--ink-35)]">
-            +{project.stack.length - 3}
+        {project.stack.length > (featured ? 6 : 3) && (
+          <span className="rounded-full border border-[var(--ink-12)] px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-[var(--ink-35)]">
+            +{project.stack.length - (featured ? 6 : 3)}
           </span>
         )}
       </div>
 
-      <div className="mt-1 flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-[var(--accent-2)]">
-        View Prototype
-        <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+      <div className="mt-1 flex items-center justify-between border-t border-[var(--ink-10)] pt-4">
+        <span className="text-sm font-semibold text-[var(--ink-100)]">Open prototype</span>
+        <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--ink-15)] text-[var(--ink-100)] transition-transform duration-300 group-hover:rotate-45">
+          <ArrowUpRight size={16} />
+        </span>
       </div>
     </motion.article>
-  </FadeIn>
-);
+  );
+});
+ProjectCard.displayName = 'ProjectCard';
 
 const ProjectsSection = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [filter, setFilter] = useState<Filter>('all');
 
+  const visible = PROJECTS.map((p, i) => ({ p, i })).filter(({ p }) => matches(p, filter));
+
+  // The first card is featured (two columns wide). Stretch the last card so no grid row is left with a hole.
+  const spanFor = (k: number) => {
+    const n = visible.length;
+    const cls: string[] = [];
+    if (k === 0 && n > 1) cls.push('md:col-span-2');
+    const slotsMd = n + (n > 1 ? 1 : 0);
+    const slotsLg = slotsMd;
+    const last = k === n - 1 && k !== 0;
+    if (last && slotsMd % 2 === 1) cls.push('md:col-span-2');
+    if (last && slotsLg % 3 === 2) cls.push('lg:col-span-2');
+    if (last && slotsLg % 3 === 1) cls.push('lg:col-span-3');
+    if (last && slotsLg % 3 === 0 && slotsMd % 2 === 1) cls.push('lg:col-span-1');
+    return cls.join(' ');
+  };
   const openProject = openIndex === null ? null : PROJECTS[openIndex];
   const close = () => setOpenIndex(null);
   const prev = () => setOpenIndex((i) => (i === null ? null : (i - 1 + PROJECTS.length) % PROJECTS.length));
   const next = () => setOpenIndex((i) => (i === null ? null : (i + 1) % PROJECTS.length));
 
   return (
-    <section
-      id="projects"
-      className="relative z-10 -mt-10 sm:-mt-12 md:-mt-14 w-full rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] bg-[var(--bg)] px-4 sm:px-6 md:px-10 pt-20 sm:pt-24 md:pt-32 pb-24"
-    >
-      <FadeIn y={40}>
-        <h2
-          className="hero-heading text-center font-black uppercase tracking-tight leading-none mb-4"
-          style={{ fontSize: 'clamp(3rem, 12vw, 160px)' }}
-        >
-          Projects
-        </h2>
-      </FadeIn>
-      <FadeIn delay={0.1} y={20}>
-        <p className="mb-14 sm:mb-16 md:mb-20 text-center font-light uppercase tracking-widest text-[var(--ink-40)]" style={{ fontSize: 'clamp(0.75rem,1.2vw,1rem)' }}>
-          Click any card to open its interactive prototype
-        </p>
-      </FadeIn>
+    <section id="projects" className="relative w-full px-5 sm:px-8 py-24 sm:py-28 md:py-36">
+      <div className="mx-auto max-w-6xl">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between lg:gap-6">
+          <SectionHeader
+            index="04"
+            label="Selected work"
+            title={
+              <>
+                Things I&apos;ve
+                <br />
+                <em className="text-gradient">shipped.</em>
+              </>
+            }
+            intro="Every card opens a live, interactive prototype — click around."
+          />
+          <FadeIn y={16} className="-mt-4 mb-10 lg:mt-0 lg:mb-20">
+            <div className="inline-flex rounded-full border border-[var(--ink-12)] bg-[var(--surface-1)] p-1" role="tablist" aria-label="Filter projects">
+              {FILTERS.map((f) => {
+                const count = PROJECTS.filter((p) => matches(p, f.id)).length;
+                return (
+                  <button
+                    key={f.id}
+                    role="tab"
+                    aria-selected={filter === f.id}
+                    onClick={() => setFilter(f.id)}
+                    className={`relative rounded-full px-4 py-2 text-xs sm:text-sm font-semibold transition-colors ${
+                      filter === f.id ? 'text-white' : 'text-[var(--ink-55)] hover:text-[var(--ink-100)]'
+                    }`}
+                  >
+                    {filter === f.id && (
+                      <motion.span
+                        layoutId="project-filter"
+                        className="absolute inset-0 rounded-full"
+                        style={{ background: 'var(--accent-gradient)' }}
+                        transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                      />
+                    )}
+                    <span className="relative">
+                      {f.label} <span className="opacity-60">{count}</span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </FadeIn>
+        </div>
 
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-        {PROJECTS.map((project, i) => (
-          <ProjectCard key={project.number} project={project} index={i} onOpen={() => setOpenIndex(i)} />
-        ))}
+        <motion.div layout className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <AnimatePresence mode="popLayout">
+            {visible.map(({ p, i }, k) => (
+              <ProjectCard key={p.number} project={p} featured={k === 0} span={spanFor(k)} onOpen={() => setOpenIndex(i)} />
+            ))}
+          </AnimatePresence>
+        </motion.div>
       </div>
 
       <ProjectDetailModal project={openProject} onClose={close} onPrev={prev} onNext={next} />

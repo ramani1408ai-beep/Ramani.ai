@@ -1,4 +1,7 @@
+import { useRef, useState } from 'react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import FadeIn from './FadeIn';
+import SectionHeader from './SectionHeader';
 
 const MOMENTS = [
   {
@@ -45,49 +48,88 @@ const MOMENTS = [
   },
 ];
 
+const TILTS = ['-rotate-2', 'rotate-1', '-rotate-1', 'rotate-2', '-rotate-1', 'rotate-1'];
+
 const BeyondCodeSection = () => {
+  const stripRef = useRef<HTMLDivElement>(null);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
+
+  const updateEdges = () => {
+    const el = stripRef.current;
+    if (!el) return;
+    setAtStart(el.scrollLeft < 8);
+    setAtEnd(el.scrollLeft + el.clientWidth > el.scrollWidth - 8);
+  };
+
+  const scrollBy = (dir: 1 | -1) => {
+    const el = stripRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * Math.min(el.clientWidth * 0.8, 720), behavior: 'smooth' });
+  };
+
   return (
-    <section
-      id="life"
-      className="relative w-full px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32"
-    >
-      <FadeIn y={40}>
-        <h2
-          className="hero-heading text-center font-black uppercase leading-none tracking-tight mb-5"
-          style={{ fontSize: 'clamp(2.6rem, 10vw, 140px)' }}
-        >
-          Beyond the code
-        </h2>
-      </FadeIn>
+    <section id="life" className="relative w-full overflow-hidden py-24 sm:py-28 md:py-36">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between">
+          <SectionHeader
+            index="05"
+            label="Life"
+            title={
+              <>
+                Beyond the
+                <br />
+                <em className="text-gradient">code.</em>
+              </>
+            }
+            intro="I design and ship AI that moves money, reads documents and answers questions for real people. Here's the life that keeps that work human."
+          />
+          <div className="mb-20 hidden gap-2 lg:flex">
+            {([-1, 1] as const).map((d) => (
+              <button
+                key={d}
+                onClick={() => scrollBy(d)}
+                disabled={d === -1 ? atStart : atEnd}
+                aria-label={d === -1 ? 'Previous photos' : 'Next photos'}
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-[var(--ink-15)] text-[var(--ink-100)] transition hover:bg-[var(--ink-05)] disabled:opacity-30"
+              >
+                {d === -1 ? <ArrowLeft size={18} /> : <ArrowRight size={18} />}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
 
-      <FadeIn delay={0.1} y={20}>
-        <p className="mx-auto mb-14 sm:mb-20 max-w-xl text-center text-sm sm:text-base font-light leading-relaxed text-[var(--ink-60)]">
-          I design and ship AI that moves money, reads documents and answers questions for real people.
-          Here's the life that keeps that work human.
-        </p>
-      </FadeIn>
-
-      <div className="mx-auto max-w-6xl columns-1 gap-5 sm:columns-2 lg:columns-3 [column-fill:_balance]">
+      {/* polaroid strip — native horizontal scroll with snap, works with touch, trackpad and the arrows */}
+      <div
+        ref={stripRef}
+        onScroll={updateEdges}
+        className="no-scrollbar flex snap-x snap-mandatory gap-5 sm:gap-7 overflow-x-auto px-5 sm:px-8 pb-10 pt-4 lg:px-[max(2rem,calc((100vw-72rem)/2+2rem))]"
+      >
         {MOMENTS.map((m, i) => (
-          <FadeIn key={m.src} delay={(i % 3) * 0.1} y={30} className="mb-5 break-inside-avoid">
-            <figure className="group overflow-hidden rounded-[28px] border border-[var(--ink-10)] bg-[var(--surface-1)]">
-              <div className="overflow-hidden">
+          <FadeIn key={m.src} delay={Math.min(i, 3) * 0.08} y={30} className="snap-center sm:snap-start shrink-0">
+            <figure
+              className={`group w-[78vw] max-w-[340px] sm:w-[320px] rounded-[22px] border border-[var(--ink-10)] bg-[var(--surface-1)] p-3 pb-5 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.35)] transition-transform duration-500 hover:rotate-0 hover:-translate-y-2 ${TILTS[i % TILTS.length]}`}
+            >
+              <div className="overflow-hidden rounded-[14px]">
                 <img
                   src={m.src}
                   alt={m.alt}
                   loading="lazy"
-                  className="w-full h-auto transition-transform duration-700 group-hover:scale-[1.04]"
+                  className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
                 />
               </div>
-              <figcaption className="px-5 py-5 sm:px-6">
-                <p className="text-[10px] uppercase tracking-[0.3em] text-[var(--ink-40)]">{m.place}</p>
-                <h3 className="mt-2 text-base sm:text-lg font-semibold leading-snug text-[var(--ink-100)]">{m.title}</h3>
-                <p className="mt-2 text-sm font-light leading-relaxed text-[var(--ink-60)]">{m.text}</p>
+              <figcaption className="px-2 pt-4">
+                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--ink-40)]">{m.place}</p>
+                <h3 className="mt-1.5 font-serif text-2xl italic leading-tight text-[var(--ink-100)]">{m.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--ink-55)]">{m.text}</p>
               </figcaption>
             </figure>
           </FadeIn>
         ))}
       </div>
+
+      <p className="px-5 text-center font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--ink-35)] lg:hidden">Swipe →</p>
     </section>
   );
 };

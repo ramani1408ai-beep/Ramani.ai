@@ -2,10 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
-/**
- * Icon-only toggle used in the light-glass hero nav (works over the video).
- * A second, band-tinted variant is used inside the Services section.
- */
+/** Icon-only light/dark toggle, styled to sit inside the floating nav pill. */
 const ThemeToggle = ({ className = '' }: { className?: string }) => {
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === 'dark';
@@ -14,7 +11,7 @@ const ThemeToggle = ({ className = '' }: { className?: string }) => {
     <button
       onClick={toggleTheme}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-      className={`flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition hover:bg-white/20 hover:scale-105 ${className}`}
+      className={`flex h-9 w-9 items-center justify-center rounded-full border border-[var(--ink-15)] text-[var(--ink-80)] transition hover:bg-[var(--ink-10)] hover:text-[var(--ink-100)] ${className}`}
     >
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
