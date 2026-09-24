@@ -100,7 +100,7 @@ const AboutSection = () => {
           <FadeIn delay={0.1} className="w-full max-w-3xl">
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
               {[
-                { value: '6', label: 'AI & Finance Projects' },
+                { value: '7', label: 'AI & Finance Projects' },
                 { value: '5', label: 'Core Tech Domains' },
                 { value: '4', label: 'Certifications' },
                 { value: '2', label: 'B.Tech · MBA (in progress)' },

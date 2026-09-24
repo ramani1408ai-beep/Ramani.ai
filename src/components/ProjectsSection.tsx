@@ -10,6 +10,7 @@ import MeetingIntelligenceDemo from './prototypes/MeetingIntelligenceDemo';
 import DashboardDemo from './prototypes/DashboardDemo';
 import TTSDemo from './prototypes/TTSDemo';
 import SafetyDemo from './prototypes/SafetyDemo';
+import CorporateFinanceDemo from './prototypes/CorporateFinanceDemo';
 
 export interface ProjectData {
   number: string;
@@ -34,6 +35,15 @@ export const PROJECTS: ProjectData[] = [
   },
   {
     number: '02',
+    category: 'Alpago 2026',
+    name: 'Corporate Finance & Contract Payments Management Module',
+    description:
+      'A centralised Corporate Finance Module that governs enterprise-wide spending, built around a contract payments management system and integrated check monitoring engines. Month-end management reports are generated and distributed automatically, removing manual reconciliation and speeding up executive decisions. Underneath, optimised transactional database architecture with advanced triggers and C# data models keeps ledger tracking and waterfall allocation accurate.',
+    stack: ['.NET C#', 'SQL Server', 'Python', 'React', 'JavaScript', 'Automated Workflows', 'Power BI'],
+    Prototype: CorporateFinanceDemo,
+  },
+  {
+    number: '03',
     category: 'Alpago 2025',
     name: 'Financial Transaction Intelligence & Reconciliation Platform',
     description:
@@ -43,7 +53,7 @@ export const PROJECTS: ProjectData[] = [
     externalPrototype: { url: '/prototypes/fms-demo/index.html?page=reconciliation', label: 'Launch Full FMS Prototype' },
   },
   {
-    number: '03',
+    number: '04',
     category: 'Alpago 2025',
     name: 'AI Meeting Intelligence & Task Automation System',
     description:
@@ -52,7 +62,7 @@ export const PROJECTS: ProjectData[] = [
     Prototype: MeetingIntelligenceDemo,
   },
   {
-    number: '04',
+    number: '05',
     category: 'Business Intelligence',
     name: 'Sales & Logistics Insights',
     description:
@@ -61,7 +71,7 @@ export const PROJECTS: ProjectData[] = [
     Prototype: DashboardDemo,
   },
   {
-    number: '05',
+    number: '06',
     category: 'AI Project',
     name: 'Conversational AI Text-to-Speech (TTS) Synthesis',
     description:
@@ -70,7 +80,7 @@ export const PROJECTS: ProjectData[] = [
     Prototype: TTSDemo,
   },
   {
-    number: '06',
+    number: '07',
     category: '2024',
     name: 'AI-Driven Construction Safety Compliance on Azure',
     description:
