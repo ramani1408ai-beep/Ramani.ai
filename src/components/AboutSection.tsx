@@ -72,6 +72,24 @@ const AboutSection = () => {
         </FadeIn>
 
         <div className="flex flex-col items-center gap-12 sm:gap-16 md:gap-20">
+          {/* Portrait — Downtown Dubai, with the Alpago name lit up behind */}
+          <FadeIn delay={0.1} y={30} className="w-full max-w-[340px] sm:max-w-[380px]">
+            <figure className="relative overflow-hidden rounded-[32px] border border-[var(--ink-10)] shadow-2xl">
+              <img
+                src="/life/downtown-alpago.webp"
+                alt="Ramani Dulipala in Downtown Dubai at night, with the Alpago sign lit behind her"
+                className="aspect-[4/5] w-full object-cover object-top"
+                loading="lazy"
+              />
+              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-5 pb-5 pt-16 text-left">
+                <p className="text-[10px] uppercase tracking-[0.3em] text-white/60">Downtown Dubai</p>
+                <p className="mt-1 text-sm sm:text-base font-medium text-white leading-snug">
+                  Building AI for finance at Alpago Group.
+                </p>
+              </figcaption>
+            </figure>
+          </FadeIn>
+
           <AnimatedText
             text={ABOUT_TEXT}
             className="font-medium leading-relaxed text-[var(--ink-100)] max-w-[560px]"

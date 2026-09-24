@@ -105,20 +105,31 @@ const ServicesSection = () => {
 
       {/* Freelance CTA banner */}
       <FadeIn delay={0.3} y={30}>
-        <div className="mx-auto mt-16 max-w-5xl rounded-[40px] border border-[var(--band-ink-10)] bg-[var(--band-ink-03)] px-8 py-10 sm:px-12 sm:py-12 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div>
-            <p className="text-xs uppercase tracking-widest text-[var(--band-ink-40)] mb-2">Ready to collaborate?</p>
-            <p className="text-xl sm:text-2xl font-medium text-[var(--band-ink-100)] max-w-md leading-snug">
+        <div className="relative mx-auto mt-16 max-w-5xl overflow-hidden rounded-[40px] px-8 py-14 sm:px-12 sm:py-20 flex flex-col sm:flex-row items-center justify-between gap-6">
+          {/* Golden hour over the DIFC skyline — where the building happens */}
+          <img
+            src="/life/office-golden-hour.webp"
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover object-[center_40%]"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/10" />
+          <div className="relative">
+            <p className="text-xs uppercase tracking-widest text-white/60 mb-2">Ready to collaborate?</p>
+            <p className="text-xl sm:text-2xl font-medium text-white max-w-md leading-snug">
               Let's turn your AI idea into a production system.
+            </p>
+            <p className="mt-3 text-sm font-light text-white/70 max-w-sm leading-relaxed">
+              From the first prompt to the final deploy — designed, built and shipped from Dubai.
             </p>
           </div>
           <a
             href="#contact"
-            className="shrink-0 inline-flex items-center rounded-full px-8 py-3.5 text-sm font-medium uppercase tracking-widest text-white transition hover:scale-[1.03]"
+            className="relative shrink-0 inline-flex items-center rounded-full px-8 py-3.5 text-sm font-medium uppercase tracking-widest text-white transition hover:scale-[1.03]"
             style={{
               background: 'linear-gradient(123deg,var(--accent-1) 7%,var(--accent-2) 37%,var(--accent-3) 72%,var(--accent-4) 100%)',
               boxShadow: '0px 4px 4px var(--accent-glow),4px 4px 12px var(--accent-3) inset',
-              outline: '2px solid var(--band-outline)',
+              outline: '2px solid #ffffff',
               outlineOffset: '-3px',
             }}
           >
