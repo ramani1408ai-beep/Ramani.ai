@@ -48,7 +48,7 @@ export const PROJECTS: ProjectData[] = [
     name: 'AI Meeting Intelligence & Task Automation System',
     description:
       'Integrates with Fireflies.ai to ingest meeting recordings; an NLP + LLM pipeline auto-extracts structured tasks, key decisions, owners, and deadlines from transcripts. Extended with custom CEO-level workflow automation: strategic trip planning, initiative tracking, calendar-aware task scheduling, and priority-ranked smart reminders.',
-    stack: ['Fireflies API', 'Azure OpenAI', 'LangChain', 'l18n', 'Python', 'REST APIs', 'Notion/Jira Integration'],
+    stack: ['Fireflies API', 'Azure OpenAI', 'LangChain', 'n8n', 'Python', 'REST APIs', 'Notion/Jira Integration'],
     Prototype: MeetingIntelligenceDemo,
   },
   {

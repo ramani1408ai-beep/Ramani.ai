@@ -3,7 +3,7 @@ import ContactButton from './ContactButton';
 import AnimatedText from './AnimatedText';
 
 const ABOUT_TEXT =
-  "I'm an AI Engineer based in Dubai, specialising in production Generative AI, LLM agentic systems, and hybrid ML on Microsoft Azure. At Alpago Group, I build intelligent financial platforms — from conversational AI assistants to real-time transaction intelligence and vendor automation engines. B.Tech from NIT Delhi (ECE, 2024). Currently pursuing an MBA in AI for Business at BITS Pilani Dubai.";
+  "I'm an AI Engineer based in Dubai, specialising in production Generative AI, agentic LLM systems and financial automation on Microsoft Azure. At Alpago Group, I work directly with the CEO building an agentic AI financial intelligence platform: FinanceGPT, a conversational advisor that turns raw bank statements into cash-flow forecasts and real-time advice, and a Corporate Finance Module that runs contract payments, check monitoring and month-end reporting. B.Tech from NIT Delhi (ECE, 2024). Pursuing an MBA in AI for Business at BITS Pilani Dubai (2026–2028).";
 
 const AboutSection = () => {
   return (
@@ -25,7 +25,7 @@ const AboutSection = () => {
       </FadeIn>
 
       <FadeIn delay={0.25} x={-80} y={0} duration={0.9}
-        className="pointer-events-none absolute bottom-[8%] left-[3%] sm:left-[6%] md:left-[10%] w-[55px] sm:w-[140px] md:w-[180px]"
+        className="pointer-events-none absolute bottom-[2%] left-[2%] sm:left-[3%] md:left-[3%] w-[55px] sm:w-[120px] md:w-[150px]"
       >
         <img
           src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png"
@@ -49,7 +49,7 @@ const AboutSection = () => {
       </FadeIn>
 
       <FadeIn delay={0.3} x={80} y={0} duration={0.9}
-        className="pointer-events-none absolute bottom-[8%] right-[3%] sm:right-[6%] md:right-[10%] w-[65px] sm:w-[170px] md:w-[220px]"
+        className="pointer-events-none absolute bottom-[2%] right-[2%] sm:right-[3%] md:right-[3%] w-[65px] sm:w-[140px] md:w-[170px]"
       >
         <img
           src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png"
@@ -122,19 +122,23 @@ const AboutSection = () => {
               {[
                 {
                   label: 'AI / LLMs / GenAI',
-                  items: ['GPT-4o', 'LLaMA', 'LangChain', 'RAG', 'Agentic AI', 'Azure OpenAI', 'Hugging Face'],
+                  items: ['GPT-4o', 'LLaMA', 'BERT', 'LangChain', 'RAG', 'Agentic AI', 'Prompt Engineering', 'Fine-Tuning', 'Azure OpenAI', 'Hugging Face'],
                 },
                 {
                   label: 'ML & Deep Learning',
-                  items: ['PyTorch', 'TensorFlow', 'scikit-learn', 'LSTM', 'Transformers', 'ARIMA', 'Anomaly Detection'],
+                  items: ['PyTorch', 'TensorFlow', 'scikit-learn', 'LSTM', 'Transformers', 'Hybrid ML', 'ARIMA', 'Anomaly Detection'],
                 },
                 {
-                  label: 'MLOps & Backend',
-                  items: ['MLflow', 'Docker', 'Kubernetes', 'FastAPI', 'Flask', 'CI/CD', 'REST APIs'],
+                  label: 'Software & Architecture',
+                  items: ['.NET C#', 'React', 'JavaScript', 'FastAPI', 'Flask', 'REST APIs', 'Transactional DB Design'],
                 },
                 {
-                  label: 'Cloud & Data',
-                  items: ['Microsoft Azure', 'Azure Document Intelligence', 'Power BI', 'Python', 'SQL', 'PySpark', 'ETL'],
+                  label: 'Data Engineering',
+                  items: ['Python', 'SQL Server', 'MySQL', 'ETL Pipelines', 'n8n', 'Azure Document Intelligence', 'Database Triggers'],
+                },
+                {
+                  label: 'Cloud, BI & MLOps',
+                  items: ['Microsoft Azure', 'Azure Cognitive Services', 'Power BI', 'DAX', 'MLflow', 'Docker', 'Kubernetes', 'CI/CD'],
                 },
               ].map((group) => (
                 <div
