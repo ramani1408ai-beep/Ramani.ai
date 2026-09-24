@@ -2,6 +2,10 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "ramani-protfolio",
   "compatibility_date": "2026-05-28",
+  "workers_dev": true,
+  "routes": [
+    { "pattern": "ramani-ai.com", "custom_domain": true }
+  ],
   "observability": {
     "enabled": true
   },

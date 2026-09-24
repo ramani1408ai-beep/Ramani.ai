@@ -272,7 +272,7 @@ const LeadForm = ({ question, resolved, onResolved }: { question: string; resolv
         onChange={(e) => setEmail(e.target.value)}
         type="email"
         required
-        placeholder="you@email.com (so he can reply)"
+        placeholder="you@email.com (so Ramani can reply)"
         className="rounded-xl border border-[var(--ink-15)] bg-[var(--surface-1)] px-3 py-2 text-xs text-[var(--ink-100)] placeholder-[var(--ink-30)] outline-none focus:border-[var(--accent-2)]/60"
       />
       <button
